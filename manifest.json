@@ -1,0 +1,33 @@
+{
+    "name": "雨课堂助手",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "更方便地使用网页版雨课堂",
+    "icons": {
+      "128": "img/yuketang_icon.png"
+    },
+    "background": {
+      "persistent": false,
+      "scripts": ["js/background.js"]
+    },
+    "permissions": [
+        "tabs",
+        "http://*.yuketang.cn/*",
+        "https://*.yuketang.cn/*"
+    ],
+    "browser_action": {
+      "default_title": "雨课堂助手",
+      "default_icon": "img/yuketang_icon.png",
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [{
+        "matches": [
+            "http://*.yuketang.cn/*",
+            "https://*.yuketang.cn/*"
+        ],
+        "js": [
+            "js/jquery-3.6.0.min.js",
+            "js/content_script.js"
+        ]
+      }]
+  }

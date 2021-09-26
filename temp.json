@@ -1,0 +1,94 @@
+{
+    "errcode": 0,
+    "errmsg": "Success",
+    "data": {
+        "IS_SIMPLE": false,
+        "prev_id": 594497349,
+        "activities": [
+            {
+                "type": 4,
+                "id": 616278210,
+                "courseware_id": "892666",
+                "title": "预备工作2 定义你的编译器功能 & 汇编编程 （小组合作）",
+                "create_time": 1632355400000,
+                "status": 1,
+                "score": null,
+                "limit": 0,
+                "deadline": 1634140500000,
+                "total_score": 2,
+                "problem_count": 1,
+                "progress": 0
+            },
+            {
+                "type": 4,
+                "id": 612568497,
+                "courseware_id": "890138",
+                "title": "预备工作1 了解你的编译器 （独立完成）",
+                "create_time": 1631799000000,
+                "status": 3,
+                "score": 0,
+                "limit": 0,
+                "deadline": 1632930900000,
+                "total_score": 2,
+                "problem_count": 1,
+                "progress": null
+            },
+            {
+                "type": 4,
+                "id": 609000255,
+                "courseware_id": "888182",
+                "title": "OT1 编译技术新进展 （独立完成）",
+                "create_time": 1631536444000,
+                "status": 1,
+                "score": null,
+                "limit": 0,
+                "deadline": 1632671700000,
+                "total_score": 2,
+                "problem_count": 1,
+                "progress": 0
+            },
+            {
+                "type": 4,
+                "id": 605085129,
+                "courseware_id": "886300",
+                "title": "第2章预习作业-1",
+                "create_time": 1631108422000,
+                "status": 3,
+                "score": 1,
+                "limit": 0,
+                "deadline": 1631634900000,
+                "total_score": 1,
+                "problem_count": 1,
+                "progress": null
+            },
+            {
+                "type": 4,
+                "id": 598151491,
+                "courseware_id": "884259",
+                "title": "第1章预习作业-调课用",
+                "create_time": 1630628450000,
+                "status": 0,
+                "score": null,
+                "limit": 0,
+                "deadline": 1630770900000,
+                "total_score": 2,
+                "problem_count": 2,
+                "progress": null
+            },
+            {
+                "type": 4,
+                "id": 594497349,
+                "courseware_id": "883257",
+                "title": "第1章预习作业",
+                "create_time": 1630302812000,
+                "status": 3,
+                "score": 2,
+                "limit": 0,
+                "deadline": 1630770900000,
+                "total_score": 2,
+                "problem_count": 2,
+                "progress": null
+            }
+        ]
+    }
+}
