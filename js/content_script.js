@@ -72,7 +72,7 @@ function searchHomeworks(ids) {
 function showActivities(acts) {
     var father = $("#app > div.viewContainer > div > div.el-tabs.el-tabs--top > div.el-tabs__header.is-top");
     var tips = "";
-    tips += ("<table border='5' cellpadding='10' align='center'><tbody><tr><th>任务</th><th>任务</th><th>DDL</th><th>总分</th><th>得分</th></tr>")
+    tips += ("<table border='5' cellpadding='10' align='center'><tbody><tr><th>任务</th><th>状态</th><th>DDL</th><th>总分</th><th>得分</th></tr>")
     for (var i = 0; i < acts.length; i++) {
         tips += ("<tr>")
         var beginTime = timestampToString(acts[i].create_time);
