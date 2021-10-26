@@ -1,6 +1,10 @@
 // 后台脚本
 var apiBase = ""
 var pageBase = ""
+var cids = [] // classroom_id
+var aids = [] // activities_id
+var cnames = {}
+var tasks = []
 init()
 
 function init() {
@@ -10,15 +14,14 @@ function init() {
         pageBase = currUrl.substring(0, lastInd);
         apiBase = pageBase.substring(0, pageBase.lastIndexOf('/')) + "/api/web";
         console.log("pageBase = " + pageBase + "\napiBase = " + apiBase);
-        var classroom_ids = searchCourses();
-        console.log("classroom_ids: " + classroom_ids);
-        var acts = searchHomeworks(classroom_ids);
-        showActivities(acts);
+        searchCourses();
+        searchHomeworks();
+        showActivities();
+        showButtons();
     }
 }
 
 function searchCourses() {
-    var ids = [];
     $.ajax({
         url: apiBase + "/courses/list",
         type: "get",
@@ -31,19 +34,20 @@ function searchCourses() {
             if (result.errcode == 0) {
                 var res_list = result.data.list
                 for (var i = 0; i < res_list.length; i++) {
-                    ids.push(res_list[i].classroom_id)
+                    var cid = res_list[i].classroom_id
+                    cids.push(cid)
+                    cnames[cid] = res_list[i].course.name
                 }
             }
         }
     });
-    return ids;
 }
 
 
-function searchHomeworks(ids) {
-    var acts = []
-    for (var i = 0; i < ids.length; i++) {
-        id = ids[i];
+function searchHomeworks() {
+    // var acts = []
+    for (var i = 0; i < cids.length; i++) {
+        id = cids[i];
         $.ajax({
             url: apiBase + "/logs/learn/" + id,
             type: "get",
@@ -59,39 +63,62 @@ function searchHomeworks(ids) {
                 if (result.errcode == 0) {
                     var arr = result.data.activities;
                     for (var i = 0; i < arr.length; i++) {
-                        acts.push(arr[i]);
+                        // acts.push(arr[i]);
+                        var m = {};
+                        m["cid"] = id;
+                        m["act"] = arr[i];
+                        tasks.push(m);
                         console.log(arr[i]);
                     }
                 }
             }
         })
     }
-    return acts;
+    // return acts;
 }
 
-function showActivities(acts) {
+function showActivities() {
     var father = $("#app > div.viewContainer > div > div.el-tabs.el-tabs--top > div.el-tabs__header.is-top");
     var tips = "";
-    tips += ("<table border='5' cellpadding='10' align='center'><tbody><tr><th>任务</th><th>状态</th><th>DDL</th><th>总分</th><th>得分</th></tr>")
-    for (var i = 0; i < acts.length; i++) {
+    tips += ("<table id='mytasks' border='5' cellpadding='10' align='center'><tbody><tr><th>课程</th><th>任务</th><th>状态</th><th>DDL</th><th>总分</th><th>得分</th></tr>")
+    for (var i = 0; i < tasks.length; i++) {
+        var act = tasks[i]["act"];
+        var cid = tasks[i]["cid"];
+        var cname = cnames[cid];
         tips += ("<tr>")
-        var beginTime = timestampToString(acts[i].create_time);
-        var endTime = timestampToString(acts[i].deadline);
-        var stat = activitiesStatusToString(acts[i].status);
-        tips += (`<td>${acts[i].title}</td>`);
+        var beginTime = timestampToString(act.create_time);
+        var endTime = timestampToString(act.deadline);
+        var stat = activitiesStatusToString(act.status);
+        tips += (`<td>${cname}</td>`)
+        tips += (`<td>${act.title}</td>`);
         tips += (`<td>${stat}</td>`);
         tips += (`<td>${endTime}</td>`);
-        tips += (`<td>${acts[i].total_score}</td>`);
-        tips += (`<td>${acts[i].score}</td>`);
+        tips += (`<td>${act.total_score}</td>`);
+        tips += (`<td>${act.score}</td>`);
         tips += ("</tr>")
     }
     tips += ("</tbody></table>")
     father.append(tips);
 }
 
+function showButtons() {
+    $("#app > div.left__menu > div.top > ul").append("<button id='toggletasks' type='button'>隐藏任务</button>");
+    $("#toggletasks").on("click", function(event){
+        $("#mytasks").toggle();
+        if($("#toggletasks").text() == "隐藏任务"){
+            $("#toggletasks").text("显示任务");
+        }else{
+            $("#toggletasks").text("隐藏任务");
+        }
+    });
+    
+}
+
+
+
 function timestampToString(tsp) {
     var date = new Date(tsp);
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getMinutes()}`
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getMinutes()}`
 }
 
 function activitiesStatusToString(stat) {
