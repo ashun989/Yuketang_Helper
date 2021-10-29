@@ -3,7 +3,7 @@ var apiBase = ""
 var pageBase = ""
 var cids = [] // classroom_id
 var aids = [] // activities_id
-var cnames = {}
+var cnames = {} // classroom_name
 var tasks = []
 init()
 
